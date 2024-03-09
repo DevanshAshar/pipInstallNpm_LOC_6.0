@@ -1,7 +1,9 @@
 const Hotel=require('../models/hotel')
 const Room=require('../models/room')
 const Inspect=require('../models/inspect')
+const {buildPDF, buildPDFForLast7Inspections}=require('../utils/buildPdf')
 const fs=require('fs')
+const { fn } = require('../utils/function')
 const cloudinary = require('cloudinary').v2;
 cloudinary.config({
   cloud_name: process.env.cloud_name,
@@ -84,16 +86,42 @@ const roomDate=async(req,res)=>{
         return res.status(400).json({ message: error })
     }
 }
-const roomDetails=async(req,res)=>{
+const invoice = async (req, res) => {
     try {
-        const {roomId,date}=req.body
-        const room=await Inspect.findById({roomId,date})
-        res.status(200).json({room})
+      const { roomId } = req.body;
+      const onDataCallback = (chunk) => {
+        res.write(chunk);
+      };
+      const onEndCallback = () => {
+        res.end();
+      };
+      buildPDFForLast7Inspections(roomId ,onDataCallback,onEndCallback)
     } catch (error) {
-        console.log(error)
-        return res.status(400).json({ message: error })
+      console.log(error.message);
+      res.status(400).json({ message: error.message });
     }
-}
+  };
+
+  const roomDetails = async (req, res) => {
+    try {
+        const { roomId, date } = req.body;
+        const room = await Inspect.findOne({ roomId, date });   
+        // console.log(room)
+        const imgs = room.img;        
+        for (const img of imgs) {
+            // console.log(img)
+            const aiImg = await fn(img);
+            room.aiImg.push(aiImg[0]);
+        }
+
+        await room.save();
+        
+        res.status(200).json({ room });
+    } catch (error) {
+        console.error(error);
+        return res.status(400).json({ message: error.message });
+    }
+};
 const allRooms=async(req,res)=>{
     try {
         const {hotelId}=req.body
@@ -105,4 +133,4 @@ const allRooms=async(req,res)=>{
         return res.status(400).json({ message: error })
     }
 }
-module.exports={addRoom,roomDetails,allRooms,roomDate}
+module.exports={addRoom,roomDetails,allRooms,roomDate,invoice}
