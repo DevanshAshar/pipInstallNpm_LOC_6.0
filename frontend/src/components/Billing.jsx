@@ -18,9 +18,7 @@ const Billing = () => (
         invoicing
       </h2>
       <p className={`${styles.paragraph} max-w-[470px] mt-5`}>
-        Elit enim sed massa etiam. Mauris eu adipiscing ultrices ametodio
-        aenean neque. Fusce ipsum orci rhoncus aliporttitor integer platea
-        placerat.
+      Our hotel management system simplifies room service management by providing advanced inventory check capabilities. Monitor and ensure proper stocking of amenities for a seamless guest experience.
       </p>
 
       <div className="flex flex-row flex-wrap sm:mt-10 mt-6">

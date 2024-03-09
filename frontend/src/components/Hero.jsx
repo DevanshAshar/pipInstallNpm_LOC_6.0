@@ -1,8 +1,54 @@
 import styles from "../style";
 import { discount, robot } from "../assets";
 import GetStarted from "./GetStarted";
+import { Box, Button, Modal, TextField, Typography } from "@mui/material";
+import { useState } from "react";
 
 const Hero = () => {
+  const [open, setOpen] = useState(false);
+  const handleOpen = (event) => {
+    event.stopPropagation();
+    setOpen(true);
+  };
+  const handleClose = () => setOpen(false);
+  const [hotelName, setHotelName] = useState("");
+  const token = localStorage.getItem("token");
+
+  const style = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 400,
+    bgcolor: 'background.paper',
+    boxShadow: 'none',
+    p: 4,
+    borderRadius: 3,
+    padding: 5
+  };
+
+  const handleAddHotel = async () => {
+    const response = await fetch('http://localhost:5000/hotel/newHotel', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': token
+      },
+      body: JSON.stringify({
+        hotelName: hotelName,
+      })
+    });
+
+    if (response.status === 200) {
+      const data = await response.json();
+      localStorage.setItem("hotelId", data.hotel._id)
+      console.log(data.message);
+      navigate('/admin');
+    } else {
+      console.error('failed:', response.statusText);
+    }
+  }
+
   return (
     <section id="home" className={`flex md:flex-row flex-col ${styles.paddingY}`}>
       <div className={`flex-1 ${styles.flexStart} flex-col xl:px-0 sm:px-16 px-6`}>
@@ -16,21 +62,16 @@ const Hero = () => {
 
         <div className="flex flex-row justify-between items-center w-full">
           <h1 className="flex-1 font-poppins font-semibold ss:text-[72px] text-[52px] text-white ss:leading-[100.8px] leading-[75px]">
-            The Next <br className="sm:block hidden" />{" "}
-            <span className="text-gradient">Generation</span>{" "}
+            Simplify Hotel Management <br className="sm:block hidden" />{" "}
+            <span className="text-gradient">with Image Analysis</span>{" "}
           </h1>
-          <div className="ss:flex hidden md:mr-4 mr-0">
+          <div className="ss:flex hidden md:mr-4 mr-0" onClick={handleOpen}>
             <GetStarted />
           </div>
         </div>
 
-        <h1 className="font-poppins font-semibold ss:text-[68px] text-[52px] text-white ss:leading-[100.8px] leading-[75px] w-full">
-          Payment Method.
-        </h1>
         <p className={`${styles.paragraph} max-w-[470px] mt-5`}>
-          Our team of experts uses a methodology to identify the credit cards
-          most likely to fit your needs. We examine annual percentage rates,
-          annual fees.
+        Effortlessly monitor room cleanliness, inventory, and more with our advanced Image Analysis system.
         </p>
       </div>
 
@@ -47,6 +88,29 @@ const Hero = () => {
       <div className={`ss:hidden ${styles.flexCenter}`}>
         <GetStarted />
       </div>
+
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+        style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+      >
+        <Box sx={style}>
+            <Typography variant='h4' style={{color: 'Black', marginTop: '10px', marginBottom: '30px'}}>Add Hotel</Typography>
+            <TextField 
+              id="outlined-basic" 
+              label="Hotel Name" 
+              variant="outlined" 
+              fullWidth 
+              value={hotelName} 
+              onChange={(e) => setHotelName(e.target.value)} // Update hotel name state
+            />
+            <Button style={{backgroundColor: 'black', color: 'white', marginTop: 30}} onClick={handleAddHotel}>
+                Add
+            </Button>
+        </Box>
+      </Modal>
     </section>
   );
 };

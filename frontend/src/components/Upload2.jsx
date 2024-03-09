@@ -3,7 +3,7 @@ import './styles3.css';
 import { Typography } from '@mui/material';
 import Webcam from 'react-webcam';
 
-const Upload = () => {
+const Upload2 = () => {
     const [images, setImages] = useState([]);
     const [isDragging, setIsDragging] = useState(false);
     const fileInputRef = useRef(null);
@@ -84,7 +84,7 @@ const Upload = () => {
             <div style={{ width: '500px', height: '800px' }}>
                 <div className='card'>
                     <div className='top'>
-                        <Typography variant='h4' style={{ color: 'white', marginTop: '20px', background: 'linear-gradient(-50deg, #37BFD1, #C1F3F5)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Upload Images of Before Cleaning</Typography>
+                        <Typography variant='h4' style={{ color: 'white', marginTop: '20px', background: 'linear-gradient(-50deg, #37BFD1, #C1F3F5)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Upload Images of After Cleaning</Typography>
                     </div>
                     <div className='drag-area' onDragOver={onDragOver} onDragLeave={onDragLeave} onDrop={onDrop}>
                         {
@@ -134,4 +134,4 @@ const Upload = () => {
     )
 }
 
-export default Upload;
+export default Upload2;

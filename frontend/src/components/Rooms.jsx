@@ -5,6 +5,7 @@ import Navbar from './Navbar';
 import styles from "../style";
 import { Typography } from '@mui/material';
 import Calendar from './Calendar';
+import CarouselSlider from './CarouselSlider';
 
 const Rooms = () => {
 
@@ -14,6 +15,14 @@ const Rooms = () => {
         { beforeurl: clean_room, afterurl: image, title: "forest" },
         { beforeurl: image, afterurl: unclean_room, title: "city" },
         { beforeurl: clean_room, afterurl: unclean_room, title: "italy" },
+      ];
+
+    const slides2 = [
+        {url: clean_room},
+        {url: image},
+        {url: clean_room},
+        {url: image},
+        {url: clean_room},
       ];
 
   return (
@@ -30,6 +39,8 @@ const Rooms = () => {
                 <ImageSlider slides={slides} />
             </div>
         </div>
+
+        <CarouselSlider slides={slides2}/>
     </div>
   )
 }
