@@ -1,0 +1,43 @@
+const mongoose = require("mongoose");
+const inspectSchema=new mongoose.Schema(
+    {
+        img:[{
+            type:String
+        }],
+        roomId:{
+            type:String,
+            ref:'Room'
+        },
+        aiImg:[{
+            type:String
+        }],
+        data:{
+            type:String
+        },
+        inspected:{
+            type:Boolean
+        },
+        staff:{
+            type:mongoose.Schema.Types.ObjectId,
+            ref:'Staff'
+        },
+        unFnElectronicItems:[
+            {
+                type:String
+            }
+        ],
+        damaged:[
+            {
+                item:{
+                    img:{type:String},
+                    name:{type:String}
+                }
+            }
+        ],
+        date:{
+            type:Date
+        }
+    }
+)
+const Inspect=mongoose.model('Inspect',inspectSchema)
+module.exports=Inspect
