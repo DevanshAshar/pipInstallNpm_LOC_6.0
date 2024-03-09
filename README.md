@@ -1,0 +1,1 @@
+# pipInstallNpm_LOC_6.0
