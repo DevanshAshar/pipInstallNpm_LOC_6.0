@@ -1,5 +1,6 @@
 const Hotel=require('../models/hotel')
 const Room=require('../models/room')
+const Inspect=require('../models/inspect')
 const fs=require('fs')
 const cloudinary = require('cloudinary').v2;
 cloudinary.config({
@@ -69,7 +70,20 @@ const addRoom = async (req, res) => {
         return res.status(400).json({ message: error.message });
     }
 };
-
+const roomDate=async(req,res)=>{
+    try {
+        const {roomId}=req.body
+        const room=await Inspect.find({roomId})
+        var roomDates=[]
+        room.forEach((elem)=>{
+            roomDates.push(elem.date)
+        })
+        res.status(200).json({roomDates})
+    } catch (error) {
+        console.log(error)
+        return res.status(400).json({ message: error })
+    }
+}
 const roomDetails=async(req,res)=>{
     try {
         const {roomId,date}=req.body
@@ -80,4 +94,15 @@ const roomDetails=async(req,res)=>{
         return res.status(400).json({ message: error })
     }
 }
-module.exports={addRoom,roomDetails}
+const allRooms=async(req,res)=>{
+    try {
+        const {hotelId}=req.body
+        const hotel=await Hotel.findById(hotelId).populate('room')
+        const rooms=hotel.room
+        res.status(200).json({rooms})
+    } catch (error) {
+        console.log(error)
+        return res.status(400).json({ message: error })
+    }
+}
+module.exports={addRoom,roomDetails,allRooms,roomDate}

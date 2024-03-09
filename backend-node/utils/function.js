@@ -1,4 +1,5 @@
 const Replicate=require('replicate')
+const axios=require('axios')
 const fn=async(image,prompt)=>{
     const replicate = new Replicate({
         auth: 'r8_doVeIKc4CvJYnsDMXxtPRlG3Aelclj31DQ6S4'

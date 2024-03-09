@@ -3,8 +3,9 @@ const Hotel=require('../models/hotel')
 const Staff=require('../models/staff')
 const newHotel=async(req,res)=>{
     try {
-        const {hotelName,username}=req.body
-        const user=await Staff.findOne({username})
+        const {hotelName}=req.body 
+        const uid=userData._id
+        const user=await Staff.findById({uid})
         user.role='Admin'
         await user.save()
         const hotel=new Hotel({hotelName,staff:[user._id]})
