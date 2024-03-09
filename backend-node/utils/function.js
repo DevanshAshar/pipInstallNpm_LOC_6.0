@@ -1,6 +1,8 @@
 const Replicate=require('replicate')
 const axios=require('axios')
-const fn=async(image,prompt)=>{
+const fn=async(image)=>{
+  console.log('idhar')
+  console.log(image)
     const replicate = new Replicate({
         auth: 'r8_doVeIKc4CvJYnsDMXxtPRlG3Aelclj31DQ6S4'
       });
@@ -14,7 +16,7 @@ const fn=async(image,prompt)=>{
             image,
             scale: 9,
             steps: 20,
-            prompt,
+            prompt:"A photorealistic image of a clean and organized hotel room. The bed is made with crisp white sheets, tucked in tightly at the corners. The pillows are neatly fluffed and arranged on the bed. The rest of the room is clean and free of clutter",
             scheduler: "DDIM",
             structure: "hough",
             num_outputs: 1,

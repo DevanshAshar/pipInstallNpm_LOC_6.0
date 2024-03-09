@@ -5,7 +5,7 @@ const newHotel=async(req,res)=>{
     try {
         const {hotelName}=req.body 
         const uid=userData._id
-        const user=await Staff.findById({uid})
+        const user=await Staff.findById(uid)
         user.role='Admin'
         await user.save()
         const hotel=new Hotel({hotelName,staff:[user._id]})
