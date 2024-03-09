@@ -3,3 +3,6 @@
 __pycache__
 db.sqlite3
 \pickle
+messy_clean_model.h5
+detector_model.pkl
+detector_mod.pkl
