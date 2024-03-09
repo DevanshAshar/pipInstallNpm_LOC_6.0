@@ -1,0 +1,20 @@
+.card{
+    background-color: white;
+    height: 200px;
+    width: 250px;
+    box-shadow: 20px 20px 50px rgba(0, 0, 0, 0.5);
+    border-radius: 15px;
+    /* background: rgba(255, 255, 255, 0.1); */
+    background: linear-gradient(45deg, #37BFD1, #C1F3F5);
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-top: 1px solid rgba(255, 255, 255, 0.5);
+    border-left: 1px solid rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(5px);
+}
+
+.content{
+    color: black;
+}
