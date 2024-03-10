@@ -1,6 +1,7 @@
 import * as React from 'react';
 import dayjs from 'dayjs';
 import Badge from '@mui/material/Badge';
+import axios from 'axios'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { PickersDay } from '@mui/x-date-pickers/PickersDay';
@@ -11,12 +12,20 @@ function getRandomNumber(min, max) {
   return Math.round(Math.random() * (max - min) + min);
 }
 
-function fakeFetch(date, { signal }) {
+async function fakeFetch(date, { signal }) {
+  const resp=await axios.post('http://localhost:5000/room/roomDate',{roomId:'65ec390bd8a8f5ffae63fbe3'})
+  var days=resp.data.roomDates
+  var daysToHighlight=[]
+  days.forEach(element => {
+    const date = new Date(element);
+    const month = date.getMonth() + 1;
+    console.log(month);
+    daysToHighlight.push(month)
+  });
   return new Promise((resolve, reject) => {
     const timeout = setTimeout(() => {
       const daysInMonth = date.daysInMonth();
-      const daysToHighlight = [1, 2, 3].map(() => getRandomNumber(1, daysInMonth));
-
+      console.log(daysToHighlight)
       resolve({ daysToHighlight });
     }, 500);
 
@@ -26,8 +35,12 @@ function fakeFetch(date, { signal }) {
     };
   });
 }
-
-const initialValue = dayjs('2022-04-17');
+const today = new Date();
+const year = today.getFullYear();
+const month = String(today.getMonth() + 1).padStart(2, '0'); 
+const day = String(today.getDate()).padStart(2, '0');
+const fd=year+"-"+month+"-"+day
+const initialValue = dayjs(fd);
 
 function ServerDay(props) {
     const { highlightedDays = [], day, outsideCurrentMonth, ...other } = props;
