@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import {clean_room, unclean_room, image} from '../assets'
 import ImageSlider from './ImageSlider';
 import Navbar from './Navbar';
@@ -8,6 +8,8 @@ import Calendar from './Calendar';
 import CarouselSlider from './CarouselSlider';
 
 const Rooms = () => {
+
+    const roomId = localStorage.getItem("roomId")
 
     const slides = [
         { beforeurl: clean_room, afterurl: unclean_room, title: "beach" },
@@ -24,6 +26,30 @@ const Rooms = () => {
         {url: image},
         {url: clean_room},
       ];
+
+    useEffect(() => {
+        const fetchData = async() => {
+            const response = await fetch('http://localhost:5000/inspect/inspDet', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                roomId: '65ec390bd8a8f5ffae63fbe3',
+                date: '2024-09-02T18:30:00.000+00:00'
+            })
+            });
+
+            if (response.status === 200) {
+                const data = await response.json();
+                console.log(data)
+            } else {
+                console.error('failed:', response.statusText);
+            }
+        }
+
+        fetchData()
+    }, [])
 
   return (
     <div style={{backgroundColor: '#161724', minHeight: '100vh', overflow: 'auto'}}>

@@ -14,6 +14,7 @@ export default function Cards({room}) {
   const handleOpen = (event) => {
     event.stopPropagation();
     setOpen(true);
+    localStorage.setItem("roomId", room._id)
   };
   const handleClose = () => setOpen(false);
 
@@ -44,6 +45,11 @@ export default function Cards({room}) {
       console.error('Login failed:', response.statusText);
     }
   }
+
+  const handleView = () => {
+
+  }
+
   return (
     <div>
     <Card sx={{ maxWidth: 300, borderRadius: 4 }}>
@@ -73,6 +79,9 @@ export default function Cards({room}) {
       style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
     >
       <Calendar />
+      <Button style={{backgroundColor: 'black', color: 'white', marginTop: 30}} onClick={handleView}>
+          View
+      </Button>
     </Modal>
     </div>
   );
