@@ -12,7 +12,7 @@ app.use(express.json());
 app.use(morgan("dev"));
 app.use(cors());
 app.use('/room',Room)
-app.use('/hotel',Hotel)
+app.use('/hotel',Hotel) 
 app.use('/inspect',Inspect)
 app.use('/user',Staff)
 app.listen(5000,()=>{
