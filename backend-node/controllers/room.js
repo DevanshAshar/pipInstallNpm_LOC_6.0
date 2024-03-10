@@ -111,11 +111,19 @@ const invoice = async (req, res) => {
         const response=await axios.post('https://9639-14-139-125-227.ngrok-free.app/api/damagecheck/',{url:'https://res.cloudinary.com/dcbnv0eyo/image/upload/v1709994354/aykcbamawsgqtwcxkhvp.jpg'})
         const resp=response.data
         let arr=resp.result
+        console.log(arr[0][0],arr[0][1])
         for(i=0;i<arr.length;i++)
         {
-            room.damaged[i].item.img=arr[i][2]
-            room.damaged[i].item.name=arr[i][1]
-            room.damaged[i].item.damaged=arr[i][0]
+            var boolValue = arr[i][0] === "true"
+            var item={
+                img:arr[i][2],
+                name:arr[i][1],
+                damaged:boolValue
+            }
+            room.damaged.push({item})
+            // room.damaged[i].item.img=arr[i][2]
+            // room.damaged[i].item.name=arr[i][1]
+            // room.damaged[i].item.damaged=arr[i][0]
             await room.save()
         }
         res.status({room})
