@@ -31,23 +31,37 @@ export const features = [
   {
     id: "feature-1",
     icon: star,
-    title: "Rewards",
+    title: "Image Generation",
     content:
-      "The best credit cards offer some tantalizing combinations of promotions and prizes",
+      "Generate AI images with power of Control Net of the cleaned rooms. ",
   },
   {
     id: "feature-2",
-    icon: shield,
-    title: "100% Secured",
+    icon: star,
+    title: "Room Cleaniness Assesement",
     content:
-      "We take proactive steps make sure your information and transactions are secure.",
+      "Assess the cleanliness of the room and generating detailed reports.",
   },
   {
     id: "feature-3",
-    icon: send,
-    title: "Balance Transfer",
+    icon: star,
+    title: "Damage Detection",
     content:
-      "A balance transfer credit card can save you a lot of money in interest charges.",
+      "Detecting the damaged products/items in the room after checkout.",
+  },
+  {
+    id: "feature-4",
+    icon: star,
+    title: "Inventory Check",
+    content:
+      "Check the inventory to monitor the amenities and have the proper stock.",
+  },
+  {
+    id: "feature-5",
+    icon: star,
+    title: "Staff Evaluation",
+    content:
+      "Evaluate the staff on basis of their performance with the help of model ",
   },
 ];
 
