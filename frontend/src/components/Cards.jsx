@@ -8,7 +8,7 @@ import Typography from '@mui/material/Typography';
 import {clean_room, unclean_room, image} from '../assets'
 import { Modal } from '@mui/material';
 import Calendar from './Calendar'
-
+import axios from 'axios'
 export default function Cards({room}) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = (event) => {
@@ -18,15 +18,24 @@ export default function Cards({room}) {
   const handleClose = () => setOpen(false);
 
   const handleClick = async() => {
-    const response = await fetch('https://pipinstallnpm-loc-6-0.onrender.com/room/invoice', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        roomId: room._id
-      })
-    });
+    // const response = await fetch('https://pipinstallnpm-loc-6-0.onrender.com/room/invoice', {
+    //   method: 'POST',
+    //   headers: {
+    //     'Content-Type': 'application/json'
+    //   },
+    //   body: JSON.stringify({
+    //     roomId: room._id
+    //   })
+    // });
+
+    const response= await axios.post('http://localhost:5000/room/invoice',{roomId:room._id},{ responseType: 'blob' })
+    const invoiceBlob = new Blob([response.data], { type: 'application/pdf' });
+    const invoiceUrl = URL.createObjectURL(invoiceBlob);
+    const link = document.createElement('a');
+    link.href = invoiceUrl;
+    link.download = 'report.pdf';
+    link.click();
+    URL.revokeObjectURL(invoiceUrl);
 
     if (response.status === 200) {
       const data = await response.json();

@@ -85,6 +85,7 @@ const CarouselSlider = ({ slides }) => {
         </div>
       </div>
       <div style={slideStylesWidthBackground}></div>
+      {/* <div><img src={slides[currentIndex].url} alt="" /></div> */}
       <div style={dotsContainerStyles}>
         {slides.map((slide, slideIndex) => (
           <div

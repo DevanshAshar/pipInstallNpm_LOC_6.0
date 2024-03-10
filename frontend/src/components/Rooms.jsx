@@ -39,8 +39,10 @@ const Rooms = () => {
                 <ImageSlider slides={slides} />
             </div>
         </div>
-
-        <CarouselSlider slides={slides2}/>
+        <div style={{width: '700px', height: '450px', marginLeft: '390px', marginTop: '30px'}}>
+            <Typography variant='h3' style={{color: 'white', marginLeft: '130px',marginBottom: '20px', background: 'linear-gradient(-50deg, #37BFD1, #C1F3F5)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent'}}>After cleaning images</Typography>
+            <CarouselSlider slides={slides2}/>
+        </div>
     </div>
   )
 }
