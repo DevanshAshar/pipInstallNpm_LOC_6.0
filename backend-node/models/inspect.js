@@ -30,7 +30,8 @@ const inspectSchema=new mongoose.Schema(
             {
                 item:{
                     img:{type:String},
-                    name:{type:String}
+                    name:{type:String},
+                    damaged:{type:Boolean}
                 }
             }
         ],

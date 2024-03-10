@@ -4,6 +4,7 @@ const Inspect=require('../models/inspect')
 const {buildPDF, buildPDFForLast7Inspections}=require('../utils/buildPdf')
 const fs=require('fs')
 const { fn } = require('../utils/function')
+const { default: axios } = require('axios')
 const cloudinary = require('cloudinary').v2;
 cloudinary.config({
   cloud_name: process.env.cloud_name,
@@ -101,7 +102,28 @@ const invoice = async (req, res) => {
       res.status(400).json({ message: error.message });
     }
   };
-
+  const damagedItems=async(req,res)=>{
+    try {
+        const {roomId}=req.body
+        const room=await Inspect.findOne({roomId})
+        // const url=room.img[0]
+        // console.log(url)
+        const response=await axios.post('https://9639-14-139-125-227.ngrok-free.app/api/damagecheck/',{url:'https://res.cloudinary.com/dcbnv0eyo/image/upload/v1709994354/aykcbamawsgqtwcxkhvp.jpg'})
+        const resp=response.data
+        let arr=resp.result
+        for(i=0;i<arr.length;i++)
+        {
+            room.damaged[i].item.img=arr[i][2]
+            room.damaged[i].item.name=arr[i][1]
+            room.damaged[i].item.damaged=arr[i][0]
+            await room.save()
+        }
+        res.status({room})
+    } catch (error) {
+        console.log(error.message);
+      res.status(400).json({ message: error.message });
+    }
+  }
   const roomDetails = async (req, res) => {
     try {
         const { roomId, date } = req.body;
@@ -133,4 +155,4 @@ const allRooms=async(req,res)=>{
         return res.status(400).json({ message: error })
     }
 }
-module.exports={addRoom,roomDetails,allRooms,roomDate,invoice}
+module.exports={addRoom,roomDetails,allRooms,roomDate,invoice,damagedItems}
