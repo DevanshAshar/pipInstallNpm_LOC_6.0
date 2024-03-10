@@ -63,8 +63,31 @@ const Upload = () => {
         }
     }
 
-    function uploadImages() {
+    const uploadImages = async() => {
         console.log("images", images)
+        const formData = new FormData();
+        for (let i = 0; i < files.length; i++) {
+        formData.append('image', files[i]);
+        }
+        formData.append('roomNo', roomNo); // Append room number
+        formData.append('roomType', roomType);
+        formData.append('hotelId', hotelId);
+
+        try {
+        const response = await axios.post('http://localhost:5000/room/addRoom', formData, {
+            headers: {
+            'Content-Type': 'multipart/form-data',
+            },
+        });
+        if(response.status == 200){
+            console.log('Response:', response.data);
+        }
+        // alert('Files uploaded successfully');
+        } catch (error) {
+        console.error('Error uploading files:', error);
+        alert('Error uploading files');
+        }
+
     }
 
     function takePicture() {

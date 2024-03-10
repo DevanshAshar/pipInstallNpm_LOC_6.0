@@ -6,9 +6,10 @@ import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import {clean_room, unclean_room, image} from '../assets'
-import { Modal } from '@mui/material';
+import { Box, Modal } from '@mui/material';
 import Calendar from './Calendar'
 import axios from 'axios'
+import { useNavigate } from 'react-router-dom';
 export default function Cards({room}) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = (event) => {
@@ -17,6 +18,7 @@ export default function Cards({room}) {
     localStorage.setItem("roomId", room._id)
   };
   const handleClose = () => setOpen(false);
+  const navigate = useNavigate();
 
   const handleClick = async() => {
     // const response = await fetch('https://pipinstallnpm-loc-6-0.onrender.com/room/invoice', {
@@ -47,8 +49,21 @@ export default function Cards({room}) {
   }
 
   const handleView = () => {
-
+    navigate('/rooms')
   }
+
+  const style = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 400,
+    bgcolor: 'background.paper',
+    boxShadow: 24,
+    p: 4,
+    borderRadius: 3,
+    padding: 2
+  };
 
   return (
     <div>
@@ -78,10 +93,12 @@ export default function Cards({room}) {
       aria-describedby="modal-modal-description"
       style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
     >
+      <Box sx={style}>
       <Calendar />
-      <Button style={{backgroundColor: 'black', color: 'white', marginTop: 30}} onClick={handleView}>
+      <Button style={{backgroundColor: 'black', color: 'white', marginTop: 10, marginLeft: 150}} onClick={handleView}>
           View
       </Button>
+      </Box>
     </Modal>
     </div>
   );
