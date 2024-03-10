@@ -20,14 +20,14 @@ const Home = () => {
             
             <div className={`bg-primary ${styles.paddingX} ${styles.flexCenter}`}>
             <div className={`${styles.boxWidth}`}>
-                <Stats />
+                {/* <Stats /> */}
                 <Business />
-                <Billing />
+                {/* <Billing /> */}
                 {/* <CardDeal /> */}
-                <Testimonials />
-                <Clients />
+                {/* <Testimonials /> */}
+                {/* <Clients /> */}
                 <CTA />
-                <Footer />
+                {/* <Footer /> */}
             </div>
             </div>
         </div>
