@@ -16,13 +16,14 @@ const Navbar = () => {
       <ul className="list-none sm:flex hidden justify-end items-center flex-1">
         {navLinks.map((nav, index) => (
           <li
+          
             key={nav.id}
             className={`font-poppins font-normal cursor-pointer text-[16px] ${
               active === nav.title ? "text-white" : "text-dimWhite"
             } ${index === navLinks.length - 1 ? "mr-0" : "mr-10"}`}
             onClick={() => setActive(nav.title)}
           >
-            <a href={nav.title === "Rooms" ? "/rooms" : nav.title === "Admin" ? "/admin" : nav.title === "Login" ? "/login" : nav.title === "Dashboard" ? "/dashboard" : nav.title === "Home" ? "/" : nav.title === "Staff" ? "/staff" : `#${nav.id}`}>
+            <a href={nav.title === "Rooms" ? "/rooms" : nav.title === "Admin" ? "/admin" : nav.title === "Login" ? "/login" : nav.title === "Dashboard" ? "/dashboard" : nav.title === "Home" ? "/" : nav.title === "Staff" ? "/staff2" : `#${nav.id}`}>
               {nav.title}
             </a>
           </li>
