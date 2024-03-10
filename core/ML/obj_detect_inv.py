@@ -6,7 +6,6 @@ import cloudinary
 import cloudinary.api
 import cloudinary.uploader
 from decouple import config
-from .prompt import damage_check
 
 cloudinary.config(
     cloud_name=config("cloud_name"),
@@ -14,9 +13,7 @@ cloudinary.config(
     api_secret=config("api_secret"),
     secure=True,
 )
-
-
-def detect(url,list):
+def detect_obj(url,list):
     with open("C://Users//Acer//Desktop//pipInstallNpm_LOC_6.0//core//ML//model//detector_mod.pkl", "rb") as file:
         loaded_detector = pickle.load(file)
     # local_image_path = '/content/WhatsApp Image 2024-03-09 at 17.26.57_ed9bb91a.jpg'
@@ -31,7 +28,7 @@ def detect(url,list):
     cropped_images = []
     labels = []
     for prediction in loaded_predictions:
-        if prediction["score"] >= 0.3:
+        if prediction['score'] >= 0.15:    
             box = prediction["box"]
             label = prediction["label"]
             labels.append(label)
@@ -41,14 +38,13 @@ def detect(url,list):
             xmax = min(image.width, xmax + margin)
             ymax = min(image.height, ymax + margin)
             image_stream = BytesIO()
-
             cropped_image = image.crop((xmin, ymin, xmax, ymax))
             print(cropped_image)
             cropped_image.save(image_stream, format="jpeg")
             image_stream.seek(0)
             img = cloudinary.uploader.upload(image_stream)["secure_url"]
-            check = damage_check(img)
-            cropped_images.append([check,label,img])
+            print(label)
+            cropped_images.append([label,img])
     # for img in cropped_images:
     #     print(img[2])
     #     print(img[1])
